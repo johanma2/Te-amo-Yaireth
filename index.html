@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Te amo Yaireth Manuela</title>
+
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('https://img.freepik.com/vector-gratis/tema-san-valentin-corazones-cielo-rosa_1308-38030.jpg?semt=ais_hybrid&w=740') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* NOMBRE BRILLANTE */
+.name {
+    font-size: 45px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff6600, #ffcc00, #ff6600);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: shine 3s linear infinite;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* DESTELLO ESTRELLA */
+.name::after {
+    content: "✨";
+    position: absolute;
+    right: -30px;
+    top: 0;
+    font-size: 30px;
+    animation: sparkle 2s infinite ease-in-out;
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+    50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+    100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
+}
+
+@keyframes shine {
+    0% { background-position: 0%; }
+    100% { background-position: 200%; }
+}
+
+/* MENSAJE PRINCIPAL */
+.message {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    font-size: 26px;
+    color: #ff6600;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* CONTADOR */
+#countdown {
+    font-size: 22px;
+    color: white;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+/* BOTÓN */
+.music-btn {
+    position: absolute;
+    bottom: 20px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #ff6600;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* CORAZONES */
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* FUEGOS */
+.firework {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: orange;
+    border-radius: 50%;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(15); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="name">Yaireth Manuela 🧡</div>
+<div class="message">Te amo infinito</div>
+<div id="countdown">La sorpresa comienza en: 10</div>
+
+<button onclick="playMusic()" class="music-btn">
+💖 Reproducir nuestra canción 💖
+</button>
+
+<audio id="loveSong" loop>
+    <source src="14febrero.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* MENSAJES DINÁMICOS */
+const mainMessages = [
+ "Te amo muchísimo mi vida 🧡", 
+ "Gracias por estar en mi vida 🌟", 
+ "Eres mi persona favorita 🧡", 
+ "Si las miradas mataran, la tuya me hizo el amor 🥰", 
+ "Tú y yo para toda la vida 🧡", 
+ "Tu sonrisa ilumina mi oscuridad 💫",
+ "Eres lo mejor que me ha pasado 😍", 
+ "A que hora sales a botar la basura? ✨",
+ "Siempre pienso en ti 💭", 
+ "Todo lo mío es tuyo 🧡"
+];
+
+setInterval(() => {
+  document.querySelector(".message").innerText =
+  mainMessages[Math.floor(Math.random() * mainMessages.length)];
+}, 4000);
+
+/* CORAZONES */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.innerHTML = "🧡";
+    heart.style.position = "absolute";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "100vh";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    heart.style.animation = "floatUp 6s linear forwards";
+    heart.style.pointerEvents = "none";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 500);
+
+/* CONTADOR */
+let timeLeft = 10;
+const countdown = document.getElementById("countdown");
+
+const timer = setInterval(() => {
+    timeLeft--;
+    countdown.innerText = "La sorpresa comienza en: " + timeLeft;
+
+    if (timeLeft <= 0) {
+        clearInterval(timer);
+        countdown.innerText = "✨ Eres lo mejor que me ha pasado ✨";
+        launchFireworks();
+    }
+}, 1000);
+
+/* FUEGOS */
+function launchFireworks() {
+    for (let i = 0; i < 40; i++) {
+        const firework = document.createElement("div");
+        firework.className = "firework";
+        firework.style.left = Math.random() * 100 + "vw";
+        firework.style.top = Math.random() * 80 + "vh";
+        document.body.appendChild(firework);
+        setTimeout(() => firework.remove(), 1000);
+    }
+}
+
+/* MÚSICA */
+let isPlaying = false;
+
+function playMusic() {
+    const song = document.getElementById("loveSong");
+
+    if (!isPlaying) {
+        song.play().then(() => {
+            isPlaying = true;
+        }).catch(error => {
+            alert("Haz clic otra vez para activar el audio ❤️");
+        });
+    }
+}
+
+</script>
+
+</body>
+</html>
